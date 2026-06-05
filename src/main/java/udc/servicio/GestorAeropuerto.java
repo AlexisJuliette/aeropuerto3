@@ -67,4 +67,8 @@ public class GestorAeropuerto {
 
         return indicePorCodigo.get(codigoReserva);
     }
+
+    public boolean existeCodigo(String codigoReserva) {
+        return indicePorCodigo.containsKey(codigoReserva);
+    }
 }
