@@ -55,4 +55,36 @@ public class PasajeroEmbarque {
     public void setEstado(String estado) {
         this.estado = estado;
     }
+
+    @Override
+    public String toString() {
+        return "Codigo: " + codigoReserva +
+                " | Nombre: " + nombre +
+                " | Destino: " + destino +
+                " | Aerolinea: " + aerolinea +
+                " | Estado: " + estado;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+
+        if (this == obj) {
+            return true;
+        }
+
+        if (!(obj instanceof PasajeroEmbarque)) {
+            return false;
+        }
+
+        PasajeroEmbarque otro = (PasajeroEmbarque) obj;
+
+        return codigoReserva.equalsIgnoreCase(
+                otro.codigoReserva
+        );
+    }
+
+    @Override
+    public int hashCode() {
+        return codigoReserva.toLowerCase().hashCode();
+    }
 }
