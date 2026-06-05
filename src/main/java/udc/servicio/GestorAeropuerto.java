@@ -88,4 +88,12 @@ public class GestorAeropuerto {
                         .equalsIgnoreCase(estado))
                 .toList();
     }
+
+    public List<PasajeroEmbarque> ordenarPorNombre() {
+
+        return pasajeros.stream()
+                .sorted(Comparator.comparing(
+                        PasajeroEmbarque::getNombre))
+                .toList();
+    }
 }
