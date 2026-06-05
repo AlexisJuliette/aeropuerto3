@@ -58,4 +58,8 @@ public class GestorAeropuerto {
     public Queue<PasajeroEmbarque> obtenerPendientes() {
         return pendientes;
     }
+
+    public Deque<PasajeroEmbarque> obtenerHistorial() {
+        return historial;
+    }
 }
