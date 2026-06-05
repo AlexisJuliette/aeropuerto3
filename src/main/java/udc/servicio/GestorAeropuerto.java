@@ -50,4 +50,8 @@ public class GestorAeropuerto {
 
         historial.push(procesado);
     }
+
+    public List<PasajeroEmbarque> obtenerPasajeros() {
+        return pasajeros;
+    }
 }
