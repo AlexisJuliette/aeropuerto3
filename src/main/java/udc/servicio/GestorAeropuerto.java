@@ -80,4 +80,12 @@ public class GestorAeropuerto {
                 .findFirst()
                 .orElse(null);
     }
+
+    public List<PasajeroEmbarque> filtrarPorEstado(String estado) {
+
+        return pasajeros.stream()
+                .filter(p -> p.getEstado()
+                        .equalsIgnoreCase(estado))
+                .toList();
+    }
 }
