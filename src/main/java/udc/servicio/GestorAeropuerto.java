@@ -35,4 +35,19 @@ public class GestorAeropuerto {
                 pasajero
         );
     }
+
+    public void procesarSiguientePasajero() {
+
+        PasajeroEmbarque procesado = pendientes.poll();
+
+        if (procesado == null) {
+            throw new IllegalStateException(
+                    "No hay pasajeros pendientes."
+            );
+        }
+
+        procesado.setEstado("PROCESADO");
+
+        historial.push(procesado);
+    }
 }
