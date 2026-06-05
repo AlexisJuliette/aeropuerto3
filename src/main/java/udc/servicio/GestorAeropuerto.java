@@ -54,4 +54,8 @@ public class GestorAeropuerto {
     public List<PasajeroEmbarque> obtenerPasajeros() {
         return pasajeros;
     }
+
+    public Queue<PasajeroEmbarque> obtenerPendientes() {
+        return pendientes;
+    }
 }
