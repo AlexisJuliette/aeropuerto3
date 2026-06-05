@@ -2,6 +2,7 @@ package udc.servicio;
 
 import udc.modelo.PasajeroEmbarque;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class GestorAeropuerto {
     private List<PasajeroEmbarque> pasajeros;
@@ -95,5 +96,83 @@ public class GestorAeropuerto {
                 .sorted(Comparator.comparing(
                         PasajeroEmbarque::getNombre))
                 .toList();
+    }
+
+    public List<PasajeroEmbarque> ordenarPorCodigoDesc() {
+
+        return pasajeros.stream()
+                .sorted(Comparator.comparing(
+                                PasajeroEmbarque::getCodigoReserva)
+                        .reversed())
+                .toList();
+    }
+
+    public Map<String, Long> obtenerEstadisticasPorEstado() {
+
+        return pasajeros.stream()
+                .collect(Collectors.groupingBy(
+                        PasajeroEmbarque::getEstado,
+                        Collectors.counting()
+                ));
+    }
+
+    public Map<String, List<PasajeroEmbarque>> agruparPorAerolinea() {
+
+        return pasajeros.stream()
+                .collect(Collectors.groupingBy(
+                        PasajeroEmbarque::getAerolinea
+                ));
+    }
+
+    public void cancelarPasajero(String codigoReserva) {
+
+        PasajeroEmbarque pasajero =
+                indicePorCodigo.get(codigoReserva);
+
+        if (pasajero == null) {
+            throw new IllegalArgumentException(
+                    "No existe el pasajero."
+            );
+        }
+
+        if (!pasajero.getEstado()
+                .equalsIgnoreCase("PENDIENTE")) {
+
+            throw new IllegalStateException(
+                    "Solo se pueden cancelar pasajeros pendientes."
+            );
+        }
+
+        pasajero.setEstado("CANCELADO");
+
+        pendientes.removeIf(
+                p -> p.getCodigoReserva()
+                        .equalsIgnoreCase(codigoReserva)
+        );
+    }
+
+    public void deshacerUltimoProcesamiento() {
+
+        PasajeroEmbarque ultimo = historial.pop();
+
+        ultimo.setEstado("PENDIENTE");
+
+        pendientes.offer(ultimo);
+    }
+
+    public int totalPasajeros() {
+        return pasajeros.size();
+    }
+
+    public int totalPendientes() {
+        return pendientes.size();
+    }
+
+    public int totalProcesados() {
+        return historial.size();
+    }
+
+    public int totalRegistradosMap() {
+        return indicePorCodigo.size();
     }
 }
