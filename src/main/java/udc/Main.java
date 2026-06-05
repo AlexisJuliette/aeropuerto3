@@ -1,5 +1,6 @@
 package udc;
 
+import udc.modelo.PasajeroEmbarque;
 import udc.servicio.GestorAeropuerto;
 
 import java.util.Scanner;
@@ -36,45 +37,116 @@ public class Main {
 
             switch (opcion) {
                 case 1:
-                    System.out.println("Registro en desarrollo...");
+                    System.out.print("Codigo de reserva: ");
+                    String codigo = teclado.nextLine();
+
+                    System.out.print("Nombre: ");
+                    String nombre = teclado.nextLine();
+
+                    System.out.print("Destino: ");
+                    String destino = teclado.nextLine();
+
+                    System.out.print("Aerolinea: ");
+                    String aerolinea = teclado.nextLine();
+
+                    PasajeroEmbarque pasajero = new PasajeroEmbarque(
+                            codigo, nombre, destino, aerolinea, "PENDIENTE"
+                    );
+
+                    gestor.registrarPasajero(pasajero);
+
+                    System.out.println("Pasajero registrado correctamente.");
                     break;
                 case 2:
-                    gestor.obtenerPasajeros().forEach(System.out::println);
+                    gestor.obtenerPasajeros()
+                            .forEach(System.out::println);
                     break;
                 case 3:
-                    gestor.obtenerPendientes().forEach(System.out::println);
+                    gestor.obtenerPendientes()
+                            .forEach(System.out::println);
+
+                    System.out.println(
+                            "Total pendientes: "
+                                    + gestor.totalPendientes()
+                    );
                     break;
                 case 4:
                     gestor.procesarSiguientePasajero();
-                    System.out.println("Pasajero procesado correctamente.");
+
+                    System.out.println(
+                            "Pasajero procesado correctamente."
+                    );
                     break;
                 case 5:
-                    gestor.obtenerHistorial().forEach(System.out::println);
+                    gestor.obtenerHistorial()
+                            .forEach(System.out::println);
+
+                    System.out.println(
+                            "Total procesados: "
+                                    + gestor.totalProcesados()
+                    );
                     break;
                 case 6:
-                    System.out.println("Busqueda Map en desarrollo...");
+                    System.out.print("Codigo de reserva: ");
+                    String codigoBuscar = teclado.nextLine();
+
+                    PasajeroEmbarque encontrado =
+                            gestor.buscarPorCodigo(codigoBuscar);
+
+                    if (encontrado != null) {
+                        System.out.println(encontrado);
+                    } else {
+                        System.out.println("Pasajero no encontrado.");
+                    }
                     break;
                 case 7:
-                    System.out.println("Busqueda Stream en desarrollo...");
+                    System.out.print("Nombre: ");
+                    String nombreBuscar = teclado.nextLine();
+
+                    PasajeroEmbarque pasajeroNombre =
+                            gestor.buscarPorNombre(nombreBuscar);
+
+                    if (pasajeroNombre != null) {
+                        System.out.println(pasajeroNombre);
+                    } else {
+                        System.out.println("Pasajero no encontrado.");
+                    }
                     break;
                 case 8:
-                    System.out.println("Filtro Stream en desarrollo...");
+                    System.out.print("Estado: ");
+                    String estado = teclado.nextLine();
+
+                    gestor.filtrarPorEstado(estado)
+                            .forEach(System.out::println);
                     break;
                 case 9:
-                    gestor.ordenarPorNombre().forEach(System.out::println);
+                    gestor.ordenarPorNombre()
+                            .forEach(System.out::println);
                     break;
                 case 10:
+                    System.out.println("=== ESTADISTICAS POR ESTADO ===");
                     System.out.println(gestor.obtenerEstadisticasPorEstado());
                     break;
                 case 11:
-                    System.out.println(gestor.agruparPorAerolinea());
+                    System.out.println(
+                            gestor.agruparPorAerolinea()
+                    );
+
                     break;
                 case 12:
-                    System.out.println("Cancelacion en desarrollo...");
+                    System.out.print("Codigo de reserva: ");
+                    String codigoCancelar = teclado.nextLine();
+
+                    gestor.cancelarPasajero(codigoCancelar);
+
+                    System.out.println("Pasajero cancelado.");
                     break;
                 case 13:
                     gestor.deshacerUltimoProcesamiento();
-                    System.out.println("Ultimo procesamiento deshecho.");
+
+                    System.out.println(
+                            "Ultimo procesamiento deshecho."
+                    );
                     break;
                 case 14:
                     System.out.println("Total pasajeros: " + gestor.totalPasajeros());
