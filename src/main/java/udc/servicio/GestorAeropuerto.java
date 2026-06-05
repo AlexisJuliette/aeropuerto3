@@ -62,4 +62,9 @@ public class GestorAeropuerto {
     public Deque<PasajeroEmbarque> obtenerHistorial() {
         return historial;
     }
+
+    public PasajeroEmbarque buscarPorCodigo(String codigoReserva) {
+
+        return indicePorCodigo.get(codigoReserva);
+    }
 }
