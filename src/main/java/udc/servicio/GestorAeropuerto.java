@@ -71,4 +71,13 @@ public class GestorAeropuerto {
     public boolean existeCodigo(String codigoReserva) {
         return indicePorCodigo.containsKey(codigoReserva);
     }
+
+    public PasajeroEmbarque buscarPorNombre(String nombre) {
+
+        return pasajeros.stream()
+                .filter(p -> p.getNombre()
+                        .equalsIgnoreCase(nombre))
+                .findFirst()
+                .orElse(null);
+    }
 }
