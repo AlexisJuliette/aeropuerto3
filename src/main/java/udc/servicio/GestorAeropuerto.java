@@ -15,4 +15,24 @@ public class GestorAeropuerto {
         historial = new ArrayDeque<>();
         indicePorCodigo = new HashMap<>();
     }
+
+    public void registrarPasajero(PasajeroEmbarque pasajero) {
+
+        if (indicePorCodigo.containsKey(
+                pasajero.getCodigoReserva())) {
+
+            throw new IllegalArgumentException(
+                    "Ya existe un pasajero con ese codigo."
+            );
+        }
+
+        pasajeros.add(pasajero);
+
+        pendientes.offer(pasajero);
+
+        indicePorCodigo.put(
+                pasajero.getCodigoReserva(),
+                pasajero
+        );
+    }
 }
